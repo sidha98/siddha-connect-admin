@@ -27,7 +27,7 @@ const Sidebar = () => {
   return (
     <CSidebar
       className="border-end"
-      colorScheme="white"
+      // colorScheme="white"
       position="fixed"
       unfoldable={unfoldable}
       visible={sidebarShow}

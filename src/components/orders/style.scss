@@ -1,0 +1,149 @@
+.orders-container {
+ padding: 20px;
+ display: flex;
+ flex-direction: column;
+
+ .orders-header {
+   text-align: center;
+   margin-top: 20px;
+
+   h2 {
+     font-size: 24px;
+     color: #333;
+   }
+ }
+
+ .order-details {
+   margin-bottom: 20px;
+   background-color: #fff;
+   border: 1px solid #ddd;
+   border-radius: 8px;
+   padding: 20px;
+   width: 100%;
+   max-width: 1000px;
+   margin: 0 auto;
+   position: relative; /* Ensure relative positioning for the delete button */
+   display: flex;
+   justify-content: space-between;
+
+   .order_info_main {
+     margin-left: 50px;
+
+     .infoHeading {
+       font-size: 20px;
+       font-weight: bold;
+       margin-bottom: 15px;
+       text-align: center;
+     }
+   }
+
+   .order-info {
+     p {
+       margin: 5px 0;
+       font-size: 14px;
+       color: #333;
+
+       strong {
+         color: #555;
+       }
+     }
+   }
+
+   .order-products {
+     padding: 20px;
+     border: 1px solid #ccc;
+     border-radius: 4px;
+     background: #f9f9f9;
+     overflow-y: auto;
+     max-height: 300px;
+     margin-left: 20px;
+     width: 500px;
+     margin-top: 45px;
+   }
+
+   /* Style for Delete Button */
+   .delete-button {
+     position: absolute;
+     top: 10px;
+     right: 10px;
+     background-color: #e74c3c;
+     color: #fff;
+     border: none;
+     padding: 10px 15px;
+     border-radius: 5px;
+     cursor: pointer;
+     font-size: 14px;
+     font-weight: bold;
+     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+     transition: background-color 0.2s ease, transform 0.2s ease;
+
+     &:hover {
+       background-color: #c0392b;
+       transform: scale(1.05);
+     }
+
+     &:active {
+       background-color: #a93226;
+       transform: scale(1);
+     }
+   }
+ }
+
+ .products-list {
+   display: flex;
+   flex-direction: column;
+   gap: 10px;
+ }
+
+ .product-card {
+   padding: 10px;
+   border: 1px solid #ccc;
+   border-radius: 4px;
+   background: #fff;
+   cursor: pointer;
+
+   &:hover {
+     background-color: #f0f0f0;
+   }
+ }
+
+ .orders-list {
+   display: grid;
+   grid-template-columns: repeat(4, 1fr);
+   gap: 15px;
+   max-height: 300px;
+   overflow-y: auto;
+   padding: 10px;
+   border: 1px solid #ddd;
+   border-radius: 8px;
+   background-color: #fff;
+   margin-top: 30px;
+
+   .order-card {
+     background-color: #fff;
+     border: 1px solid #ddd;
+     border-radius: 8px;
+     padding: 10px;
+     cursor: pointer;
+     transition:
+       transform 0.2s,
+       box-shadow 0.2s;
+
+     p {
+       margin: 5px 0;
+       font-size: 14px;
+       color: #333;
+     }
+
+     &:hover {
+       transform: translateY(-5px);
+       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+     }
+
+     &.selected {
+       border-color: #007bff;
+       box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
+     }
+   }
+ }
+}

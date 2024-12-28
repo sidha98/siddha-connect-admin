@@ -1,7 +1,7 @@
 import React from 'react'
 import CIcon from '@coreui/icons-react'
 import {
-  cilBell,
+ cilBarChart,
   cilCalculator,
   cilChartPie,
   cilCursor,
@@ -26,20 +26,20 @@ const _nav = [
   {
     component: CNavItem,
     name: 'Orders',
-    to: '/theme/orders', //change this path
+    to: '/orders', //change this path
     icon: <CIcon icon={cilNotes} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
-    name: 'Channel Targets',
-    to: '/theme/typography',
-    icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+    name: 'Sales Data',
+    to: '/salesData',
+    icon: <CIcon icon={cilBarChart} customClassName="nav-icon" />,
   },
   {
    component: CNavItem,
    name: 'Dealers',
    to: '/theme/typography',
-   icon: <CIcon icon={cilPuzzle} customClassName="nav-icon" />,
+   icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
  },
  {
   component: CNavItem,
@@ -50,8 +50,8 @@ const _nav = [
 {
  component: CNavItem,
  name: 'Users',
- to: '/theme/typography',
- icon: <CIcon icon={cilPuzzle} customClassName="nav-icon" />,
+ to: '/users',
+ icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
 },
 {
  component: CNavItem,
