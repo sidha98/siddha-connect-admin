@@ -1,19 +1,8 @@
 import React from 'react'
-import CIcon from '@coreui/icons-react'
-import {
- cilBarChart,
-  cilCalculator,
-  cilChartPie,
-  cilCursor,
-  cilDescription,
-  cilDrop,
-  cilExternalLink,
-  cilNotes,
-  cilPencil,
-  cilPuzzle,
-  cilSpeedometer,
-  cilStar,
-} from '@coreui/icons'
+import { FaTachometerAlt, FaClipboardList, FaChartBar, FaUsers, FaPencilAlt, FaUser } from 'react-icons/fa'
+import { AiFillProduct } from "react-icons/ai";
+import '../src/components/sidebar/style.scss'
+
 import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
 
 const _nav = [
@@ -21,44 +10,44 @@ const _nav = [
     component: CNavItem,
     name: 'Dashboard',
     to: '/dashboard',
-    icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
+    icon: <FaTachometerAlt className="nav-icon" />,
   },
   {
     component: CNavItem,
     name: 'Orders',
-    to: '/orders', //change this path
-    icon: <CIcon icon={cilNotes} customClassName="nav-icon" />,
+    to: '/orders', 
+    icon: <FaClipboardList className="nav-icon" />,
   },
   {
     component: CNavItem,
     name: 'Sales Data',
     to: '/salesData',
-    icon: <CIcon icon={cilBarChart} customClassName="nav-icon" />,
+    icon: <FaChartBar className="nav-icon" />,
   },
   {
-   component: CNavItem,
-   name: 'Dealers',
-   to: '/theme/typography',
-   icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
- },
- {
-  component: CNavItem,
-  name: 'Products',
-  to: '/theme/typography',
-  icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
-},
-{
- component: CNavItem,
- name: 'Users',
- to: '/users',
- icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
-},
-{
- component: CNavItem,
- name: 'Profile',
- to: '/theme/typography',
- icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
-},
+    component: CNavItem,
+    name: 'Dealers',
+    to: '/dealers',
+    icon: <FaPencilAlt className="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Products',
+    to: '/products',
+    icon: <AiFillProduct className="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Users',
+    to: '/users',
+    icon: <FaUsers className="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Profile',
+    to: '/profile',
+    icon: <FaUser className="nav-icon" />,
+  },
 ]
 
 export default _nav

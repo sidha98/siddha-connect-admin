@@ -1,6 +1,7 @@
 import React from 'react'
 import Dashboard from './components/dashboard/Dashboard'
 import Orders from './components/orders/Orders'
+import Profile from './components/profile'
 import Sales_Data from './components/salesData'
 import Users from './components/users'
 // Base
@@ -13,7 +14,8 @@ const routes = [
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
   { path: '/orders', name: 'Orders', element: Orders },
   { path: '/users', name: 'Users', element: Users },
-  { path: '/salesData', name: 'Sales', element: Sales_Data },
+  { path: '/salesData', name: 'Sales Data', element: Sales_Data },
+  { path: '/profile', name: 'Sales', element: Profile },
 
 ]
 

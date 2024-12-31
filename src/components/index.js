@@ -2,7 +2,7 @@ import AppBreadcrumb from './AppBreadcrumb'
 import AppContent from './AppContent'
 import AppHeader from './AppHeader'
 import AppHeaderDropdown from './header/AppHeaderDropdown'
-import Sidebar from './Sidebar'
+import Sidebar from './sidebar/Sidebar'
 import DocsComponents from './DocsComponents'
 import DocsIcons from './DocsIcons'
 import DocsLink from './DocsLink'
@@ -18,4 +18,5 @@ export {
   DocsIcons,
   DocsLink,
   DocsExample,
+
 }

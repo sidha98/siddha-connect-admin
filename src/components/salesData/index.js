@@ -13,7 +13,6 @@ const Sales_Data = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
   const rowsPerPage = 5;
-  const pagesPerBlock = 5;
 
   const fetchSalesData = async (page) => {
     try {
@@ -21,7 +20,7 @@ const Sales_Data = () => {
         `${backend_url}/sales-data-mtdw/getSalesData?page=${page}&limit=${rowsPerPage}`
       );
       setSalesData(response.data.data);
-      setTotalCount(response.data.totalCount); 
+      setTotalCount(response.data.totalCount);
       setLoading(false);
     } catch (err) {
       setError("Error fetching data");
@@ -57,35 +56,24 @@ const Sales_Data = () => {
   };
 
   // Pagination Logic
-  const totalPages = Math.ceil(totalCount / rowsPerPage); 
-  const currentPageBlock = Math.ceil(currentPage / pagesPerBlock);
+  const totalPages = Math.ceil(totalCount / rowsPerPage);
 
-  const pageBlockStart = (currentPageBlock - 1) * pagesPerBlock + 1;
-  const pageBlockEnd = Math.min(pageBlockStart + pagesPerBlock - 1, totalPages);
-
-  // Handle page change
-  const changePage = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
-
-  // Handle Previous Block
-  const previousBlock = () => {
-    if (currentPageBlock > 1) {
-      setCurrentPage((currentPageBlock - 1) * pagesPerBlock);
+  // Handle Previous Page
+  const prevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prev) => prev - 1);
     }
   };
 
-  // Handle Next Block
-  const nextBlock = () => {
-    if (currentPageBlock < Math.ceil(totalPages / pagesPerBlock)) {
-      setCurrentPage(currentPageBlock * pagesPerBlock + 1);
+  // Handle Next Page
+  const nextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage((prev) => prev + 1);
     }
   };
 
   return (
     <div className="sales-data">
-      <h1>Sales Data</h1>
-
       {/* Filters */}
       <div className="filter-container">
         <input
@@ -119,79 +107,55 @@ const Sales_Data = () => {
 
       {/* Table */}
       <div className="table-container">
-          <>
-            <table className="sales-table">
-              <thead>
-                <tr>
-                  <th>STATE</th>
-                  <th>TSE</th>
-                  <th>ASM</th>
-                  <th>SEGMENT</th>
-                  <th>PRICE BAND</th>
+        <table className="sales-table">
+          <thead>
+            <tr>
+              <th>STATE</th>
+              <th>TSE</th>
+              <th>ASM</th>
+              <th>SEGMENT</th>
+              <th>PRICE BAND</th>
+            </tr>
+          </thead>
+          <tbody>
+            {salesData.length > 0 ? (
+              salesData.map((item, index) => (
+                <tr key={item.id || index}>
+                  <td>{item.STATE}</td>
+                  <td>{item.TSE}</td>
+                  <td>{item.ASM}</td>
+                  <td>{item.SEGMENT}</td>
+                  <td>{item["PRICE BAND"]}</td>
                 </tr>
-              </thead>
-              <tbody>
-                {salesData.length > 0 ? (
-                  salesData.map((item, index) => (
-                    <tr key={item.id || index}>
-                      <td>{item.STATE}</td>
-                      <td>{item.TSE}</td>
-                      <td>{item.ASM}</td>
-                      <td>{item.SEGMENT}</td>
-                      <td>{item["PRICE BAND"]}</td>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="5">No data available</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
 
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan="5">No data available</td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-
-            {/* Pagination */}
-            <div className="pagination">
-              {/* Previous Block Button */}
-              <button
-                onClick={previousBlock}
-                className="prev-block-btn"
-                disabled={currentPageBlock === 1}
-              >
-                Previous
-              </button>
-
-              {/* Show 5 pages at a time */}
-              {Array.from({ length: pageBlockEnd - pageBlockStart + 1 }).map(
-                (_, index) => {
-                  const pageNum = pageBlockStart + index;
-                  return (
-                    pageNum <= totalPages && (
-                      <button
-                        key={pageNum}
-                        onClick={() => changePage(pageNum)}
-                        className={`page-btn ${
-                          currentPage === pageNum ? "active" : ""
-                        }`}
-                      >
-                        {pageNum}
-                      </button>
-                    )
-                  );
-                }
-              )}
-
-              {/* Next Block Button */}
-              <button
-                onClick={nextBlock}
-                className="next-block-btn"
-                disabled={currentPageBlock >= Math.ceil(totalPages / pagesPerBlock)}
-              >
-                Next
-              </button>
-            </div>
-          </>
-        
+        {/* Pagination */}
+        <div className="pagination">
+          <button
+            onClick={prevPage}
+            className="page-btn"
+            disabled={currentPage === 1}
+          >
+            &lt;
+          </button>
+          <span>
+            Page {currentPage} of {totalPages}
+          </span>
+          <button
+            onClick={nextPage}
+            className="page-btn"
+            disabled={currentPage === totalPages}
+          >
+            &gt;
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -1,73 +1,65 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
-import PropTypes from 'prop-types'
-
-import SimpleBar from 'simplebar-react'
-import 'simplebar-react/dist/simplebar.min.css'
-
-import { CBadge, CNavLink, CSidebarNav } from '@coreui/react'
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import '../components/sidebar/style.scss'; // Custom styles
 
 export const AppSidebarNav = ({ items }) => {
-  const navLink = (name, icon, badge, indent = false) => {
-    return (
-      <>
-        {icon
-          ? icon
-          : indent && (
-              <span className="nav-icon">
-                <span className="nav-icon-bullet"></span>
-              </span>
-            )}
-        {name && name}
-        {badge && (
-          <CBadge color={badge.color} className="ms-auto" size="sm">
-            {badge.text}
-          </CBadge>
-        )}
-      </>
-    )
-  }
+  const navLink = (name, icon, badge, indent = false) => (
+    <>
+      {icon && <span className="nav-icon">{icon}</span>}
+      <span className={`nav-text ${indent ? 'nav-indent' : ''}`}>{name}</span>
+      {badge && <span className="nav-badge">{badge.text}</span>}
+    </>
+  );
 
   const navItem = (item, index, indent = false) => {
-    const { component, name, badge, icon, ...rest } = item
-    const Component = component
+    const { name, badge, icon, to, href } = item;
+
     return (
-      <Component as="div" key={index}>
-        {rest.to || rest.href ? (
-          <CNavLink
-            {...(rest.to && { as: NavLink })}
-            {...(rest.href && { target: '_blank', rel: 'noopener noreferrer' })}
-            {...rest}
+      <div key={index} className="nav-item">
+        {to || href ? (
+          <NavLink
+            to={to}
+            href={href}
+            target={href ? '_blank' : undefined}
+            rel={href ? 'noopener noreferrer' : undefined}
+            className={({ isActive }) => `nav-link${isActive ? ' active' : ''}`}
           >
             {navLink(name, icon, badge, indent)}
-          </CNavLink>
+          </NavLink>
         ) : (
-          navLink(name, icon, badge, indent)
+          <span className="nav-link">{navLink(name, icon, badge, indent)}</span>
         )}
-      </Component>
-    )
-  }
+      </div>
+    );
+  };
 
   const navGroup = (item, index) => {
-    const { component, name, icon, items, to, ...rest } = item
-    const Component = component
+    const { name, icon, items } = item;
+
     return (
-      <Component compact as="div" key={index} toggler={navLink(name, icon)} {...rest}>
-        {item.items?.map((item, index) =>
-          item.items ? navGroup(item, index) : navItem(item, index, true),
-        )}
-      </Component>
-    )
-  }
+      <div key={index} className="nav-group">
+        <div className="nav-group-header">
+          {navLink(name, icon)}
+        </div>
+        <div className="nav-group-items">
+          {items.map((subItem, subIndex) =>
+            subItem.items ? navGroup(subItem, subIndex) : navItem(subItem, subIndex, true)
+          )}
+        </div>
+      </div>
+    );
+  };
 
   return (
-    <CSidebarNav as={SimpleBar}>
-      {items &&
-        items.map((item, index) => (item.items ? navGroup(item, index) : navItem(item, index)))}
-    </CSidebarNav>
-  )
-}
+    <div className="custom-sidebar-nav">
+      {items.map((item, index) =>
+        item.items ? navGroup(item, index) : navItem(item, index)
+      )}
+    </div>
+  );
+};
 
 AppSidebarNav.propTypes = {
   items: PropTypes.arrayOf(PropTypes.any).isRequired,
-}
+};
