@@ -12,7 +12,7 @@ const Sales_Data = () => {
   const [endDate, setEndDate] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
-  const rowsPerPage = 5;
+  const rowsPerPage = 50;
 
   const fetchSalesData = async (page) => {
     try {
@@ -33,7 +33,6 @@ const Sales_Data = () => {
     fetchSalesData(currentPage);
   }, [currentPage]);
 
-  // Apply Filters
   const applyFilters = () => {
     const filteredData = salesData.filter((item) => {
       const matchesSearchTerm = item.name
@@ -47,7 +46,6 @@ const Sales_Data = () => {
     setSalesData(filteredData);
   };
 
-  // Reset Filters
   const resetFilters = () => {
     setSearchTerm("");
     setStartDate("");
@@ -74,6 +72,7 @@ const Sales_Data = () => {
 
   return (
     <div className="sales-data">
+      <h2 className="table-title">Sales</h2>
       {/* Filters */}
       <div className="filter-container">
         <input
@@ -107,34 +106,36 @@ const Sales_Data = () => {
 
       {/* Table */}
       <div className="table-container">
-        <table className="sales-table">
-          <thead>
-            <tr>
-              <th>STATE</th>
-              <th>TSE</th>
-              <th>ASM</th>
-              <th>SEGMENT</th>
-              <th>PRICE BAND</th>
+      <div className="scrollable-table">
+    <table className="sales-table">
+      <thead>
+        <tr>
+          <th>STATE</th>
+          <th>TSE</th>
+          <th>ASM</th>
+          <th>SEGMENT</th>
+          <th>PRICE BAND</th>
+        </tr>
+      </thead>
+      <tbody>
+        {salesData.length > 0 ? (
+          salesData.map((item, index) => (
+            <tr key={item.id || index}>
+              <td>{item.STATE}</td>
+              <td>{item.TSE}</td>
+              <td>{item.ASM}</td>
+              <td>{item.SEGMENT}</td>
+              <td>{item["PRICE BAND"]}</td>
             </tr>
-          </thead>
-          <tbody>
-            {salesData.length > 0 ? (
-              salesData.map((item, index) => (
-                <tr key={item.id || index}>
-                  <td>{item.STATE}</td>
-                  <td>{item.TSE}</td>
-                  <td>{item.ASM}</td>
-                  <td>{item.SEGMENT}</td>
-                  <td>{item["PRICE BAND"]}</td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="5">No data available</td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+          ))
+        ) : (
+          <tr>
+            <td colSpan="5">No data available</td>
+          </tr>
+        )}
+      </tbody>
+    </table>
+  </div>
 
         {/* Pagination */}
         <div className="pagination">

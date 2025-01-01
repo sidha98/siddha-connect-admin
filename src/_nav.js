@@ -1,5 +1,5 @@
 import React from 'react'
-import { FaTachometerAlt, FaClipboardList, FaChartBar, FaUsers, FaPencilAlt, FaUser } from 'react-icons/fa'
+import { FaTachometerAlt, FaClipboardList, FaFilter,FaChartBar, FaUsers, FaPencilAlt, FaUser } from 'react-icons/fa'
 import { AiFillProduct } from "react-icons/ai";
 import '../src/components/sidebar/style.scss'
 
@@ -31,9 +31,15 @@ const _nav = [
     icon: <FaPencilAlt className="nav-icon" />,
   },
   {
+   component: CNavItem,
+   name: 'Extraction',
+   to: '/extraction',
+   icon: <FaFilter className="nav-icon" />,
+ },
+  {
     component: CNavItem,
-    name: 'Products',
-    to: '/products',
+    name: 'Segment',
+    to: '/segment',
     icon: <AiFillProduct className="nav-icon" />,
   },
   {

@@ -1,0 +1,115 @@
+.extraction-container {
+
+ .table-title {
+   font-size: 24px;
+   font-weight: bold;
+   // margin-bottom: 20px;
+   color: #333;
+   // text-align: center;
+ }
+
+ .filters {
+   display: flex;
+   gap: 10px;
+   margin-bottom: 20px;
+   justify-content: center;
+
+   .filter-input,
+   .filter-date {
+     padding: 8px;
+     border: 1px solid #ccc;
+     border-radius: 4px;
+     font-size: 14px;
+   }
+
+   .filter-reset {
+     background-color: #555;
+     color: white;
+     border: none;
+     padding: 8px 15px;
+     cursor: pointer;
+     border-radius: 4px;
+     font-size: 14px;
+
+     &:hover {
+       background-color: #333;
+     }
+   }
+ }
+
+ .table-wrapper {
+   max-height: 400px; /* Adjust to your preferred height */
+   overflow-y: auto;
+   border: 1px solid #ccc;
+   margin: 0 auto; /* Centers the table-wrapper */
+   width: 90%; /* Adjust table width as needed */
+   border-radius: 5px; /* Optional for rounded corners */
+ }
+
+ .extraction-table {
+   width: 100%;
+   border-collapse: collapse;
+
+   thead {
+     .table-header {
+       background-color: grey;
+       color: white;
+       text-align: center;
+       padding: 10px;
+       font-size: 16px;
+       position: sticky; /* Makes the header stick while scrolling */
+       top: 0;
+       z-index: 1;
+     }
+   }
+
+   tbody {
+     .table-row {
+       &:hover {
+         background-color: #f1f1f1;
+       }
+
+       .table-cell {
+         text-align: center;
+         padding: 10px;
+         border: 1px solid #ddd;
+         font-size: 14px;
+       }
+     }
+   }
+ }
+
+ .pagination-controls {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   margin-top: 20px;
+   width: 90%;
+   margin: 0 auto; /* Center pagination controls */
+
+   .pagination-button {
+     padding: 8px 15px;
+     cursor: pointer;
+     border: 1px solid #ccc;
+     background-color: #f9f9f9;
+     border-radius: 4px;
+     font-size: 14px;
+
+     &:hover {
+       background-color: #e6e6e6;
+     }
+
+     &:disabled {
+       cursor: not-allowed;
+       opacity: 0.5;
+       background-color: #ddd;
+     }
+   }
+
+   .pagination-info {
+     font-size: 14px;
+     font-weight: bold;
+     color: #333;
+   }
+ }
+}
