@@ -5,6 +5,7 @@ import '../src/components/sidebar/style.scss'
 
 import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
 
+
 const _nav = [
   {
     component: CNavItem,
@@ -49,11 +50,17 @@ const _nav = [
     icon: <FaUsers className="nav-icon" />,
   },
   {
-    component: CNavItem,
-    name: 'Profile',
-    to: '/profile',
-    icon: <FaUser className="nav-icon" />,
-  },
+   component: CNavItem,
+   name: "Logout",
+   to: "/login", // Add this to ensure redirection
+   icon: <FaUser className="nav-icon" />,
+   onClick: () => {
+     // Perform the logout logic
+     localStorage.removeItem("token");
+     localStorage.removeItem("user");
+     navigate("/login");
+   },
+ },
 ]
 
 export default _nav

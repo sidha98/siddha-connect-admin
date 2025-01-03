@@ -10,10 +10,11 @@ const Users = () => {
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState(''); 
   const [selectedPosition, setSelectedPosition] = useState(''); 
+  const [currentPage, setCurrentPage] = useState(1); 
+  const [itemsPerPage] = useState(10); 
   const positions = ['TSE', 'ZSM', 'ASM', 'ABM']; 
 
   useEffect(() => {
-   
     const fetchUsers = async () => {
       try {
         const response = await axios.get(`${backend_url}/users/getUser`); 
@@ -30,7 +31,6 @@ const Users = () => {
   }, []);
 
   useEffect(() => {
-    // Filter users based on search term and position
     const filtered = users.filter((user) => {
       const matchesSearchTerm = 
         user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -43,7 +43,14 @@ const Users = () => {
     });
 
     setFilteredUsers(filtered);
+    setCurrentPage(1); // Reset to first page on filter change
   }, [searchTerm, selectedPosition, users]);
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentItems = filteredUsers.slice(startIndex, endIndex);
+
+  const totalPages = Math.ceil(filteredUsers.length / itemsPerPage);
 
   if (loading) {
     return <div>Loading...</div>; 
@@ -57,7 +64,6 @@ const Users = () => {
     <div className="user-container">
       <h2 className="user-title">Users</h2>
 
-      {/* Search and filter section */}
       <div className="filter-section">
         <input
           type="text"
@@ -81,25 +87,26 @@ const Users = () => {
         </select>
       </div>
 
-      <table className="user-table">
-        <thead>
-          <tr>
-            <th className="field-label">Name</th>
-            <th className="field-label">Email</th>
-            <th className="field-label">Position</th>
-          </tr>
-        </thead>
-        <tbody>
-          {/* Map over the filtered users array and display each user's data */}
-          {filteredUsers.map((user) => (
-            <tr key={user._id}>
-              <td>{user.name}</td>
-              <td>{user.email}</td>
-              <td>{user.position}</td>
+      <div className="table-container">
+        <table className="user-table">
+          <thead>
+            <tr>
+              <th className="field-label">Name</th>
+              <th className="field-label">Email</th>
+              <th className="field-label">Position</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {currentItems.map((user) => (
+              <tr key={user._id}>
+                <td>{user.name}</td>
+                <td>{user.email}</td>
+                <td>{user.position}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

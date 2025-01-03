@@ -132,6 +132,9 @@ const ExtractionData = () => {
         <button onClick={resetFilters} className="filter-reset">
           Reset Filters
         </button>
+        <button className="upload-file">
+          Upload File
+        </button>
       </div>
       <div className="table-wrapper">
         <table className="extraction-table">

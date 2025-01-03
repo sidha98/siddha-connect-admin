@@ -1,15 +1,13 @@
 import React from 'react'
 import Dashboard from './components/dashboard/Dashboard'
+import DealersData from './components/dealers'
 import ExtractionData from './components/extraction'
 import Orders from './components/orders/Orders'
 import Profile from './components/profile'
 import Sales_Data from './components/salesData'
 import SegmentData from './components/segmentTarget'
 import Users from './components/users'
-// Base
-const Accordion = React.lazy(() => import('./views/base/accordion/Accordion'))
-const Breadcrumbs = React.lazy(() => import('./views/base/breadcrumbs/Breadcrumbs'))
-const Cards = React.lazy(() => import('./views/base/cards/Cards'))
+
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -19,8 +17,9 @@ const routes = [
   { path: '/users', name: 'Users', element: Users },
   { path: '/salesData', name: 'Sales Data', element: Sales_Data },
   { path: '/segment', name: 'Segment Data', element: SegmentData },
+  { path: '/dealers', name: 'Dealers Data', element: DealersData },
 
-  { path: '/profile', name: 'Sales', element: Profile },
+  // { path: '/profile', name: 'Profile', element: Profile },
 
 ]
 

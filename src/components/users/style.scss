@@ -1,133 +1,87 @@
 
-$user-secondary-color: #f9f9f9;
-$user-text-color: #333;
-$user-heading-color: #222;
-$user-border-color: #ddd;
-$user-hover-color: #e1f1e1;
-
 .user-container {
-  padding: 30px;
-  background-color: $user-secondary-color;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  // padding: 30px;
+  // background-color: #f9f9f9;
+  // border-radius: 8px;
+  // box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   max-width: 100%;
 
-  overflow-x: auto; 
   .filter-section {
-   display: flex;
-   justify-content: space-between;
-   margin-bottom: 20px;
- 
-   .search-input {
-     width: 50%;
-     padding: 8px 12px;
-     font-size: 16px;
-     border: 1px solid #ccc;
-     border-radius: 4px;
-     margin-right: 10px;
-   }
- 
-   .position-dropdown {
-     padding: 8px 12px;
-     font-size: 16px;
-     border: 1px solid #ccc;
-     border-radius: 4px;
-     width: 30%;
-   }
- }
- 
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+    .search-input {
+      width: 50%;
+      padding: 8px 12px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-right: 10px;
+    }
+
+    .position-dropdown {
+      padding: 8px 12px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      width: 30%;
+    }
+  }
+
   .user-title {
-    text-align: center;
-    color: $user-heading-color;
-    font-size: 24px;
+    // text-align: center;
+    color: #222;
+    font-size: 20px;
     font-weight: 600;
-    margin-bottom: 25px;
+    // margin-bottom: 25px;
   }
 
-  .user-table {
-    width: 100%;
-    border-collapse: collapse;
-    text-align: left;
-    font-family: Arial, sans-serif;
+  .table-container {
+    // max-height: 400px; 
+    overflow-y: auto;
+    // border: 1px solid #ddd;
+    border-radius: 4px;
 
-    thead {
-      background-color: #c9ebca;
-      color: black;
+    .user-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
 
-      th {
-        padding: 18px 20px;
-        text-align: center;
-        font-size: 16px;
-        font-weight: 600;
-      }
-    }
+      thead {
+        background-color: white;
 
-    tbody {
-      tr {
-        // &:nth-child(odd) {
-        //   background-color: $user-hover-color;
-        // }
-
-        &:hover {
-          background-color: #e5e5e5; 
-        }
-
-        td {
-          padding: 12px 20px;
-          color: $user-text-color;
-          border: 1px solid $user-border-color;
+        th {
+          // padding: 18px 20px;
           text-align: center;
-          vertical-align: middle;
+          font-size: 15px;
+          font-weight: 600;
+          position: sticky;
+          top: 0;
+          // z-index: -1;
+          background-color: white;
+        }
+      }
 
-          &.field-label {
-            font-weight: bold;
-            background-color: $user-secondary-color;
-            color: #4CAF50;
+      tbody {
+        tr {
+          &:hover {
+            background-color: #e5e5e5;
           }
-        }
-      }
-    }
-  }
 
+          td {
+            padding: 12px 20px;
+            color: #333;
+            border: 1px solid #ddd;
+            text-align: center;
+            vertical-align: middle;
+            font-size: 12px;
 
-  @media screen and (max-width: 768px) {
-    .user-table {
-      thead {
-        th {
-          font-size: 14px;
-          padding: 12px 15px;
-        }
-      }
-
-      tbody {
-        td {
-          padding: 10px 12px;
-          font-size: 14px;
-        }
-      }
-    }
-  }
-
-  @media screen and (max-width: 480px) {
-    padding: 15px;
-
-    .user-title {
-      font-size: 20px;
-      margin-bottom: 15px;
-    }
-
-    .user-table {
-      thead {
-        th {
-          font-size: 12px;
-          padding: 10px 12px;
-        }
-      }
-
-      tbody {
-        td {
-          font-size: 12px;
-          padding: 8px 10px;
+            &.field-label {
+              font-weight: bold;
+              background-color:#f9f9f9;
+            }
+          }
         }
       }
     }
