@@ -4,6 +4,7 @@ import "./style.scss";
 import { MdSkipNext ,MdSkipPrevious} from "react-icons/md";
 
 import axios from "axios";
+import { CTable } from "@coreui/react";
 
 const ExtractionData = () => {
   const [originalData, setOriginalData] = useState([]); 
@@ -136,9 +137,11 @@ const ExtractionData = () => {
           Upload File
         </button>
       </div>
-      <div className="table-wrapper">
-        <table className="extraction-table">
-          <thead>
+      <div className="table-container">
+        <div className="scrollable-table">
+         <CTable striped className="extraction-table">
+
+         <thead>
             <tr>
               {columns.map((col, index) => (
                 <th key={index} className="table-header">
@@ -158,7 +161,8 @@ const ExtractionData = () => {
               </tr>
             ))}
           </tbody>
-        </table>
+         </CTable>
+        </div>
       </div>
       <div className="pagination-controls">
         <button

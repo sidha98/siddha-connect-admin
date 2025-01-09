@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios'; 
 import { backend_url } from "../../config.dev.json";
 import './style.scss';
+import { CTable } from '@coreui/react';
 
 const Users = () => {
   const [users, setUsers] = useState([]); 
@@ -88,12 +89,13 @@ const Users = () => {
       </div>
 
       <div className="table-container">
-        <table className="user-table">
-          <thead>
+        <div className="scrollable-table">
+         <CTable striped className='user-table'>
+         <thead>
             <tr>
-              <th className="field-label">Name</th>
-              <th className="field-label">Email</th>
-              <th className="field-label">Position</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Position</th>
             </tr>
           </thead>
           <tbody>
@@ -105,7 +107,8 @@ const Users = () => {
               </tr>
             ))}
           </tbody>
-        </table>
+         </CTable>
+        </div>
       </div>
     </div>
   );

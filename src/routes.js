@@ -2,6 +2,9 @@ import React from 'react'
 import Dashboard from './components/dashboard/Dashboard'
 import DealersData from './components/dealers'
 import ExtractionData from './components/extraction'
+import AdminLogin from './components/login'
+import Logout from './components/login/logout'
+import ModelData from './components/modelData'
 import Orders from './components/orders/Orders'
 import Profile from './components/profile'
 import Sales_Data from './components/salesData'
@@ -18,8 +21,8 @@ const routes = [
   { path: '/salesData', name: 'Sales Data', element: Sales_Data },
   { path: '/segment', name: 'Segment Data', element: SegmentData },
   { path: '/dealers', name: 'Dealers Data', element: DealersData },
-
-  // { path: '/profile', name: 'Profile', element: Profile },
+  { path: '/model', name: 'Model Data', element: ModelData },
+  { path: '/profile', name: 'Profile', element: Profile  },
 
 ]
 

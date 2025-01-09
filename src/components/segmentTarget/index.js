@@ -3,6 +3,7 @@ import axios from 'axios';
 import { backend_url } from "../../config.dev.json";
 import './style.scss';
 import { MdOutlineSkipPrevious,MdOutlineSkipNext } from "react-icons/md";
+import { CTable } from '@coreui/react';
 
 
 const SegmentTable = () => {
@@ -20,7 +21,7 @@ const SegmentTable = () => {
   const fetchSegments = async (pageNumber) => {
     try {
       setLoading(true);
-      const response = await axios.get(`${backend_url}/segment/getSegement`, {
+      const response = await axios.get(`${backend_url}/segment-target/getSegement`, {
         params: { page: pageNumber, limit },
       });
       setSegments(response.data.data);
@@ -48,17 +49,18 @@ const SegmentTable = () => {
     if (page < totalPages) setPage((prev) => prev + 1);
   };
   const applyFilters = () => {
-   setCurrentPage(1);
-   fetchSalesData(1);
+   setPage(1);
+   fetchSegments(1);
  };
-
+ 
  const resetFilters = () => {
    setSearchTerm("");
    setStartDate("");
    setEndDate("");
-   setCurrentPage(1);
-   fetchSalesData(1);
+   setPage(1);
+   fetchSegments(1);
  };
+ 
 
   return (
     <div className="segment-table-container">
@@ -94,9 +96,10 @@ const SegmentTable = () => {
           </button>
         </div>
       </div>
-      <div className="table-wrapper">
-        <table className="segment-table">
-          <thead>
+      <div className="table-container">
+        <div className="scrollable-table">
+        <CTable striped className = "segment-table">
+        <thead>
             <tr>
               <th>Name</th>
               <th>Segment</th>
@@ -116,7 +119,8 @@ const SegmentTable = () => {
               </tr>
             ))}
           </tbody>
-        </table>
+        </CTable>
+        </div>
       </div>
       <div className="pagination">
         <button onClick={handlePrevious} disabled={page === 1}>

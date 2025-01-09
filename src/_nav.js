@@ -1,6 +1,8 @@
 import React from 'react'
-import { FaTachometerAlt, FaClipboardList, FaFilter,FaChartBar, FaUsers, FaPencilAlt, FaUser } from 'react-icons/fa'
+import { FaTachometerAlt, FaClipboardList, FaFilter,FaChartBar, FaUsers, FaPencilAlt, FaUser,FaUserCircle, } from 'react-icons/fa'
 import { AiFillProduct } from "react-icons/ai";
+import { RiLogoutBoxFill } from "react-icons/ri";
+
 import '../src/components/sidebar/style.scss'
 
 import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
@@ -51,16 +53,22 @@ const _nav = [
   },
   {
    component: CNavItem,
-   name: "Logout",
-   to: "/login", // Add this to ensure redirection
-   icon: <FaUser className="nav-icon" />,
-   onClick: () => {
-     // Perform the logout logic
-     localStorage.removeItem("token");
-     localStorage.removeItem("user");
-     navigate("/login");
-   },
+   name: 'Model',
+   to: '/model',
+   icon: <FaUsers className="nav-icon" />,
  },
+  {
+   component: CNavItem,
+   name: "Logout",
+   to : "/logout",
+    icon: <RiLogoutBoxFill className="nav-icon" />,
+   },
+   {
+    component: CNavItem,
+    name: "Profile",
+    to : "/profile",
+     icon: <FaUserCircle className="nav-icon" />,
+    },
 ]
 
 export default _nav

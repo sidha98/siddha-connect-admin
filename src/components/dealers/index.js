@@ -1,57 +1,167 @@
-import React, { useState } from 'react'
-import "./style.scss"
-const DealersData = () => {
- const [dateRange, setDateRange] = useState("27/12/2024 - 03/01/2025");
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { backend_url } from "../../config.dev.json";
+import "./style.scss";
+import { CTable } from '@coreui/react'
+
+const Dealers = () => {
+  const [dealerData, setDealerData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalCount, setTotalCount] = useState(0);
+  const rowsPerPage = 50;
+
+  const fetchSalesData = async (page) => {
+    try {
+      const response = await axios.get(
+        `${backend_url}/dealer/getDealer?page=${page}&limit=${rowsPerPage}`
+      );
+      setDealerData(response.data.data);
+      setTotalCount(response.data.totalCount);
+      setLoading(false);
+    } catch (err) {
+      setError("Error fetching data");
+      console.error("Error fetching sales data:", err);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchSalesData(currentPage);
+  }, [currentPage]);
+
+  const applyFilters = () => {
+    const filteredData = salesData.filter((item) => {
+      const matchesSearchTerm = item.name
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
+      const matchesDateRange =
+        (!startDate || new Date(item.date) >= new Date(startDate)) &&
+        (!endDate || new Date(item.date) <= new Date(endDate));
+      return matchesSearchTerm && matchesDateRange;
+    });
+    setDealerData(filteredData);
+  };
+
+  const resetFilters = () => {
+    setSearchTerm("");
+    setStartDate("");
+    setEndDate("");
+    fetchSalesData(currentPage);
+  };
+
+  // Pagination Logic
+  const totalPages = Math.ceil(totalCount / rowsPerPage);
+
+  // Handle Previous Page
+  const prevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prev) => prev - 1);
+    }
+  };
+
+  // Handle Next Page
+  const nextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage((prev) => prev + 1);
+    }
+  };
 
   return (
-   <div className="my-orders-container">
-   <div className="header">
-     <h2>Dealers</h2>
-   </div>
-   <div className="filters">
-     <div className="date-range">
-       <label htmlFor="date-range">Date Range:</label>
-       <input
-         type="text"
-         id="date-range"
-         value={dateRange}
-         onChange={(e) => setDateRange(e.target.value)}
-         placeholder="Select Date Range"
-       />
-     </div>
-     <button className="search-button">Search</button>
-     <div className="table-search">
-       <label htmlFor="table-search">Search:</label>
-       <input type="text" id="table-search" placeholder="Search..." />
-     </div>
-   </div>
-   <div className="table-actions">
-     <button>Copy</button>
-     <button>Download</button>
-   </div>
-   <div className="table-container">
-     <table>
-       <thead>
-         <tr>
-           <th>Order No</th>
-           <th>Order Date</th>
-           <th>Part No</th>
-           <th>Qty</th>
-           <th>Rate</th>
-           <th>Payment Method</th>
-           <th>Shipping Method</th>
-           <th>Delivery Address</th>
-         </tr>
-       </thead>
-       <tbody>
-         <tr>
-           <td colSpan="8">No data available in table</td>
-         </tr>
-       </tbody>
-     </table>
-   </div>
- </div>
-  )
-}
+    <div className="dealer-data">
+      <h2 className="table-title">Dealers</h2>
+      {/* Filters */}
+      <div className="filter-container">
+        <input
+          type="text"
+          placeholder="Search..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="filter-input"
+        />
+        <input
+          type="date"
+          value={startDate}
+          onChange={(e) => setStartDate(e.target.value)}
+          className="filter-input"
+        />
+        <input
+          type="date"
+          value={endDate}
+          onChange={(e) => setEndDate(e.target.value)}
+          className="filter-input"
+        />
+        <div className="filter-buttons">
+          <button className="apply-btn" onClick={applyFilters}>
+            Apply Filter
+          </button>
+          <button className="reset-btn" onClick={resetFilters}>
+            Reset
+          </button>
+        </div>
+      </div>
 
-export default DealersData;
+      {/* Table */}
+      <div className="table-container">
+      <div className="scrollable-table">
+    <CTable striped className="dealer-table">
+      <thead>
+        <tr>
+          <th>NAME</th>
+          <th>POSITION</th>
+          <th>CONTACT NUMBER</th>
+          <th>EMAIL</th>
+          <th>ADDRESS</th>
+        </tr>
+      </thead>
+      <tbody>
+        {dealerData.length > 0 ? (
+          dealerData.map((item, index) => (
+            <tr key={item.id || index}>
+              <td>{item.name}</td>
+              {/* <td>{item.position}</td> */}
+              <td>{item.contactNumber}</td>
+              <td>{item.email}</td>
+              <td>{item.birthday}</td>
+              <td>{item.homeAddress}</td>
+            </tr>
+          ))
+        ) : (
+          <tr>
+            <td colSpan="5">No data available</td>
+          </tr>
+        )}
+      </tbody>
+    </CTable>
+  </div>
+
+        {/* Pagination */}
+        <div className="pagination">
+          <button
+            onClick={prevPage}
+            className="page-btn"
+            disabled={currentPage === 1}
+          >
+            &lt;
+          </button>
+          <span>
+            Page {currentPage} of {totalPages}
+          </span>
+          <button
+            onClick={nextPage}
+            className="page-btn"
+            disabled={currentPage === totalPages}
+          >
+            &gt;
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Dealers;
