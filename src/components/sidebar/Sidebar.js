@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { styled, useTheme } from '@mui/material/styles';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar from '@mui/material/AppBar';
@@ -17,8 +17,13 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import Tooltip from '@mui/material/Tooltip'; 
-import _nav from '../../_nav';
+import Tooltip from '@mui/material/Tooltip';
+import Collapse from '@mui/material/Collapse';
+import { Button } from '@mui/material'; // Added Button component
+import { FaTachometerAlt, FaClipboardList, FaFilter, FaChartBar, FaUsers, FaPencilAlt, FaUserCircle } from 'react-icons/fa';
+import { AiFillProduct } from 'react-icons/ai';
+import { IoPhonePortrait } from "react-icons/io5";
+import { RiLogoutBoxFill, RiFileUploadFill } from 'react-icons/ri';
 
 const drawerWidth = 240;
 
@@ -86,9 +91,11 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   })
 );
 
-export default function MiniDrawer() {
+const MiniDrawer = () => {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [openUpload, setOpenUpload] = useState(false); // State for managing the dropdown
+  const navigate = useNavigate();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -98,13 +105,41 @@ export default function MiniDrawer() {
     setOpen(false);
   };
 
+  const handleUploadClick = () => {
+    setOpenUpload(!openUpload); // Toggle the dropdown
+  };
+
+  const navItems = [
+    { name: 'Dashboard', to: '/dashboard', icon: <FaTachometerAlt /> },
+    { name: 'Orders', to: '/orders', icon: <FaClipboardList /> },
+    { name: 'Sales Data', to: '/salesData', icon: <FaChartBar /> },
+    { name: 'Dealers', to: '/dealers', icon: <FaPencilAlt /> },
+    { name: 'Extraction', to: '/extraction', icon: <FaFilter /> },
+    { name: 'Segment', to: '/segment', icon: <AiFillProduct /> },
+    { name: 'Users', to: '/users', icon: <FaUsers /> },
+    // { name: 'Model', to: '/model', icon: <IoPhonePortrait /> },
+    {
+      name: 'Upload',
+      icon: <RiFileUploadFill />,
+      onClick: handleUploadClick, // Add click handler to toggle dropdown
+    },
+    { name: 'Profile', to: '/profile', icon: <FaUserCircle /> },
+    {
+      name: 'Logout',
+      icon: <RiLogoutBoxFill />,
+      action: () => {
+        localStorage.removeItem('isAuthenticated'); 
+        navigate('/login'); 
+      },
+    },
+  ];
+
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
         <Toolbar>
           <IconButton
-            // color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
@@ -116,7 +151,7 @@ export default function MiniDrawer() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-           Siddha Corporation
+            Siddha Admin
           </Typography>
         </Toolbar>
       </AppBar>
@@ -128,12 +163,13 @@ export default function MiniDrawer() {
         </DrawerHeader>
         <Divider />
         <List>
-          {_nav.map((item, index) => (
+          {navItems.map((item, index) => (
             <ListItem key={index} disablePadding sx={{ display: 'block' }}>
               <Tooltip title={item.name} arrow placement="right">
                 <ListItemButton
-                  component={Link}
-                  to={item.to}
+                  component={item.action ? undefined : Link} // Only add Link for navigation
+                  to={item.to} // Use 'to' only if navigation is present
+                  onClick={item.onClick || item.action} // Use onClick for dropdown toggle or logout action
                   sx={{
                     minHeight: 48,
                     justifyContent: open ? 'initial' : 'center',
@@ -155,13 +191,44 @@ export default function MiniDrawer() {
                   />
                 </ListItemButton>
               </Tooltip>
+              {/* Show dropdown for Upload */}
+              {item.name === 'Upload' && (
+                <Collapse in={openUpload} timeout="auto" unmountOnExit>
+                  <List component="div" disablePadding>
+                    <ListItemButton component="div" sx={{ px: 2.5 }}>
+                      <Button 
+                        variant="outlined" 
+                        fullWidth 
+                        component={Link} 
+                        to="/upload-tally-transaction"
+                        // sx={{ mb: 1 }}
+                      >
+                        Tally Transaction
+                      </Button>
+                    </ListItemButton>
+                    <ListItemButton component="div" sx={{ px: 2.5 }}>
+                      <Button 
+                        variant="outlined" 
+                        fullWidth 
+                        component={Link} 
+                        to="/upload-extraction"
+                      >
+                        Extraction Data
+                      </Button>
+                    </ListItemButton>
+                  </List>
+                </Collapse>
+              )}
             </ListItem>
           ))}
         </List>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
+        {/* Main content goes here */}
       </Box>
     </Box>
   );
-}
+};
+
+export default MiniDrawer;

@@ -2,8 +2,6 @@ import React from 'react'
 import Dashboard from './components/dashboard/Dashboard'
 import DealersData from './components/dealers'
 import ExtractionData from './components/extraction'
-import AdminLogin from './components/login'
-import Logout from './components/login/logout'
 import ModelData from './components/modelData'
 import Orders from './components/orders/Orders'
 import Profile from './components/profile'
@@ -23,6 +21,7 @@ const routes = [
   { path: '/dealers', name: 'Dealers Data', element: DealersData },
   { path: '/model', name: 'Model Data', element: ModelData },
   { path: '/profile', name: 'Profile', element: Profile  },
+
 
 ]
 
